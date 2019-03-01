@@ -79,14 +79,6 @@ export default class AboutScreen extends React.Component {
           </Text>
         </View>
 
-        <View style={styles.websiteContainer}>
-          <TouchableOpacity onPress={this._handleVisitWebsitePress}>
-            <Text style={{ color: 'blue' }}>
-              Visit our website
-            </Text>
-          </TouchableOpacity>
-        </View>
-
         <View style={styles.historyContainer}>
           <Text style={styles.historyTitle}>
             HISTORY
