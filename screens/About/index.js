@@ -23,7 +23,7 @@ export default class AboutScreen extends React.Component {
   }
 
   static navigationOptions = {
-    title: 'ISCOF Circle',
+    title: 'About DNHS',
     headerStyle: {
       borderBottomColor: 'rgba(8,158,232,.3)',
       borderBottomWidth: 2,
