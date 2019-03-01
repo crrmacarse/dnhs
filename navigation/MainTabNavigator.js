@@ -10,6 +10,7 @@ import LocationScreen from '../screens/Rooms/location';
 // new
 import RoomNavigatorScreen from '../screens/Rooms';
 
+import AboutScreen from '../screens/About;
 
 const RoomStack = createStackNavigator({
   Room: RoomNavigatorScreen,
@@ -48,7 +49,29 @@ CampusMapStack.navigationOptions = {
   ),
 };
 
+const AboutStack = createStackNavigator({
+  About: AboutScreen,
+});
+
+AboutStack.navigationOptions = {
+  tabBarLabel: 'About',
+  tabBarOptions: {
+    activeTintColor: 'grey',
+  },
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={
+      Platform.OS === 'ios'
+          ? `ios-information-circle${focused ? '' : '-outline'}`
+          : 'md-information-circle'
+      }
+    />
+  ),
+};
+
 export default createBottomTabNavigator({
   RoomStack,
   CampusMapStack,
+  AboutStack,
 });
