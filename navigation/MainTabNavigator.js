@@ -10,7 +10,7 @@ import LocationScreen from '../screens/Rooms/location';
 // new
 import RoomNavigatorScreen from '../screens/Rooms';
 
-import AboutScreen from '../screens/About;
+import AboutScreen from '../screens/About';
 
 const RoomStack = createStackNavigator({
   Room: RoomNavigatorScreen,
