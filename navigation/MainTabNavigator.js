@@ -3,89 +3,52 @@ import { Platform } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 
 import TabBarIcon from '../components/TabBarIcon';
-import HomeScreen from '../screens/HomeScreen';
-import NavigateScreen from '../screens/NavigateScreen';
-import AboutScreen from '../screens/AboutScreen';
-import ExploreScreen from '../screens/ExploreScreen';
-import CamusMapScreen from '../screens/CamusMapScreen';
-import LocationScreen from '../screens/LocationScreen';
+import CampusMapScreen from '../screens/CampusMap';
 import SettingsScreen from '../screens/Settings';
-import LocationSettingsScreen from '../screens/Settings/locationmap';
-const HomeStack = createStackNavigator({
-  Home: HomeScreen,
-});
+import LocationSettingsScreen from '../screens/Settings/locationmap.js';
+import LocationScreen from '../screens/Rooms/location';
+// new
+import RoomNavigatorScreen from '../screens/Rooms';
 
-HomeStack.navigationOptions = {
-  tabBarLabel: 'Home',
-  tabBarOptions: {
-    activeTintColor: 'green',
-  },
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-home' : 'md-home'}
-    />
-  ),
-};
 
-const NavigateStack = createStackNavigator({
-  Navigate: NavigateScreen,
+const RoomStack = createStackNavigator({
+  Room: RoomNavigatorScreen,
+  Settings: SettingsScreen,
+  LocationSettings: LocationSettingsScreen,
   Location: LocationScreen,
 });
 
-NavigateStack.navigationOptions = {
-  tabBarLabel: 'Navigate',
+RoomStack.navigationOptions = {
+  tabBarLabel: 'Room Navigator',
   tabBarOptions: {
-    activeTintColor: 'green',
+    activeTintColor: '#064bcb',
   },
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-navigate' : 'md-navigate'}
+      name={Platform.OS === 'ios' ? 'ios-search' : 'md-search'}
     />
   ),
 };
 
-const ExploreStack = createStackNavigator({
-  Explore: ExploreScreen,
+const CampusMapStack = createStackNavigator({
+  CampusMap: CampusMapScreen,
 });
 
-ExploreStack.navigationOptions = {
-  tabBarLabel: 'Explore',
+CampusMapStack.navigationOptions = {
+  tabBarLabel: 'Campus Map',
   tabBarOptions: {
-    activeTintColor: 'green',
+    activeTintColor: 'grey',
   },
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-globe' : 'md-globe'}
-    />
-  ),
-};
-
-const AboutStack = createStackNavigator({
-  About: AboutScreen,
-  CampusMap: CamusMapScreen,
-  Settings: SettingsScreen,
-  LocationSettings: LocationSettingsScreen
-});
-
-AboutStack.navigationOptions = {
-  tabBarLabel: 'More',
-  tabBarOptions: {
-    activeTintColor: 'green',
-  },
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-menu' : 'md-menu'}
+      name={Platform.OS === 'ios' ? 'ios-book' : 'md-book'}
     />
   ),
 };
 
 export default createBottomTabNavigator({
-  HomeStack,
-  NavigateStack,
-  ExploreStack,
-  AboutStack,
+  RoomStack,
+  CampusMapStack,
 });

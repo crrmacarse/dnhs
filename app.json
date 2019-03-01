@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "ISCOF Directory",
-    "slug": "ISCOF",
+    "name": "DNHS Room Finder",
+    "slug": "DNHS",
     "privacy": "public",
     "sdkVersion": "32.0.0",
     "android": {
-      "package": "com.shsevilleno.iscof"
+      "package": "com.dnhsroomfinder.dnhs"
     },
     "platforms": [
       "ios",
@@ -17,7 +17,7 @@
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "cover",
-      "backgroundColor": "#099EE7"
+      "backgroundColor": "#fff"
     },
     "updates": {
       "fallbackToCacheTimeout": 0

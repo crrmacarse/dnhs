@@ -120,7 +120,7 @@ class LocationSettingsScreen extends React.Component {
             zIndex: -1
           }}
           mapType={layer}
-          minZoomLevel={18}
+          minZoomLevel={19}
           showsCompass
           loadingEnabled
           showsMyLocationButton
@@ -128,13 +128,13 @@ class LocationSettingsScreen extends React.Component {
           initialRegion={{
             latitude: location.latitude,
             longitude: location.longitude,
-            latitudeDelta: 0.0922 / 2.5,
-            longitudeDelta: 0.0421 / 2.5,
+            latitudeDelta: 0.0043,
+            longitudeDelta: 0.0034
           }}
         >
 
           <Marker
-            pinColor="orange"
+            pinColor="skyblue"
             draggable
             onDragEnd={(event) => {
               this.setState({
@@ -151,14 +151,14 @@ class LocationSettingsScreen extends React.Component {
         <View style={{
           position: 'absolute',
           backgroundColor: '#f3f3f3',
-          bottom: 10,
-          right: 10,
+          bottom: '5%',
+          left: '37%',
           zIndex: 10,
         }}>
 
           <View style={{ flexDirection: 'row' }}>
             < View style={{
-              margin: 3,
+              margin: 5,
             }}
             >
               <Button
@@ -166,7 +166,7 @@ class LocationSettingsScreen extends React.Component {
                   this._saveLocation();
                 }}
                 title="Save Location"
-                color="green"
+                color="#0275d8"
                 accessibilityLabel="Save"
               />
             </View>
@@ -182,10 +182,9 @@ const withFirebaseLocationSettings = withFirebase(LocationSettingsScreen);
 withFirebaseLocationSettings.navigationOptions = ({ navigation }) => ({
   title: navigation.getParam('markerTitle', 'Location Settings'),
   headerStyle: {
-    backgroundColor: '#089EE8',
-    borderBottomColor: 'black',
-    borderBottomWidth: 0,
-  }
+    borderBottomColor: 'rgba(8,158,232,.3)',
+    borderBottomWidth: 2,
+  },
 });
 
 export default withFirebaseLocationSettings;

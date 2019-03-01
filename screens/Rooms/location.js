@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { withFirebase } from '../firebase';
+import { withFirebase } from '../../firebase';
 
 import { Marker } from 'react-native-maps';
 
@@ -26,9 +26,7 @@ class LocationScreen extends React.Component {
   }
 
   /*
-
   pass to setImageModalVisible the image then display in modal the image via state
-
   */
 
   state = {
@@ -142,7 +140,7 @@ class LocationScreen extends React.Component {
         >
 
           <Marker
-            pinColor="orange"
+            pinColor="skyblue"
             coordinate={location}
             title={name + ' is here!'}
             onPress={() => {
@@ -154,7 +152,7 @@ class LocationScreen extends React.Component {
 
 
         <Modal
-          animationType="slide"
+          animationType="fade"
           transparent
           onRequestClose={() => {
             this.setModalVisible(false)
@@ -163,7 +161,7 @@ class LocationScreen extends React.Component {
         >
           <TouchableWithoutFeedback onPress={() => this.setModalVisible(false)}>
             <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'flex-end' }}>
-              <View style={{ paddingTop: 25, paddingBottom: 25, width: '100%', backgroundColor: '#fff', justifyContent: "center", alignItems: 'center' }}>
+              <View style={{ paddingTop: 25, paddingBottom: 25, width: '55%', height: '92%', backgroundColor: '#fff', justifyContent: "center", alignItems: 'center' }}>
                 <View style={{ alignItems: 'center', flexDirection: 'row', marginBottom: 5 }}>
                   <Text style={{
                     fontSize: 15,
@@ -207,48 +205,6 @@ class LocationScreen extends React.Component {
                   </View>
                 </View>
 
-
-                <View style={{ alignItems: 'center', flexDirection: 'row', marginBottom: 5 }}>
-                  {imageUrl && imageUrl.map((img, index) =>
-                    <TouchableWithoutFeedback onPress={() => {
-                      this.setState({selectedImgUrl: img})
-                      this.setImageModalVisible(true)
-                    }
-                    } key={index}>
-                      <Image
-                        style={{ width: 75, height: 75 }}
-                        source={{uri: img}}
-
-                      />
-                    </TouchableWithoutFeedback>
-                  )}
-                </View>
-
-
-                <View style={{
-                  alignItems: 'center',
-                  padding: 3,
-                }}>
-                  <Text style={{
-                    textAlign: 'center',
-                    fontStyle: 'italic'
-                  }}>{description}</Text>
-                </View>
-
-                {moreInfo &&
-                  <View style={{
-                    alignItems: 'center',
-                    padding: 3,
-                  }}>
-                    <Text style={{
-                      textAlign: 'center',
-                      fontSize: 12,
-                      letterSpacing: 0.5,
-                      color: "#585858"
-                    }}>Office Head: {moreInfo.dean}</Text>
-                  </View>
-                }
-
                 <View style={{ flexDirection: 'row', marginTop: 15 }}>
                   {tags.map((tag, index) =>
                     <Text key={index}
@@ -279,53 +235,11 @@ class LocationScreen extends React.Component {
           </TouchableWithoutFeedback>
         </Modal>
 
-        <Modal
-          animationType="slide"
-          transparent={false}
-          presentationStyle="fullScreen"
-          onRequestClose={() => {
-            this.setImageModalVisible(false)
-          }}
-          visible={this.state.modalImageVisible}
-        >
-          <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-            <View style={{ backgroundColor: '#fff', justifyContent: "center", alignItems: 'center' }}>
-
-              <View style={{ flex: 2, alignItems: 'center', flexDirection: 'row' }}>
-                <ImageBackground
-                  style={{ width: '100%', height: '100%' }}
-                  source={{uri: selectedImgUrl}}
-                />
-              </View>
-
-              <View style={{
-                flex: 0,
-                position: 'absolute',
-                top: 5,
-                right: 5,
-                zIndex: 1030,
-              }}>
-                <TouchableOpacity
-                  onPress={() => {
-                    this.setImageModalVisible(!this.state.modalImageVisible);
-                  }}>
-                  <Icon.Ionicons
-                    name={Platform.OS === 'ios' ? 'ios-close-circle' : 'md-close-circle'}
-                    size={40}
-                    style={{ marginRight: 8 }}
-                    color="white"
-                  />
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-        </Modal>
-
         <View style={{
           position: 'absolute',
-          backgroundColor: '#f3f3f3',
-          bottom: 10,
-          right: 10,
+          backgroundColor: '#0275d8',
+          top: 10,
+          left: 15,
           zIndex: 10,
         }}>
           <TouchableOpacity
@@ -334,7 +248,7 @@ class LocationScreen extends React.Component {
             }}>
             <Text
               style={{
-                color: '#333',
+                color: '#fff',
                 padding: 8
               }}>More Information
             </Text>
@@ -350,12 +264,9 @@ const withFirebaseLocation = withFirebase(LocationScreen);
 withFirebaseLocation.navigationOptions = ({ navigation }) => ({
   title: navigation.getParam('markername', 'Location Finder'),
   headerStyle: {
-    backgroundColor: '#089EE8',
-    borderBottomColor: 'black',
-    borderBottomWidth: 0,
-  }
+    borderBottomColor: 'rgba(8,158,232,.3)',
+    borderBottomWidth: 2,
+  },
 });
 
 export default withFirebaseLocation;
-
-
