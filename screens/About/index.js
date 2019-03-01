@@ -1,7 +1,7 @@
 import React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 
-import AdditionalHistory from '../components/AdditionalHistory';
+import AdditionalHistory from '../../components/AdditionalHistory';
 
 import {
   Platform,
@@ -32,8 +32,8 @@ export default class AboutScreen extends React.Component {
 
   componentDidMount() {
     Font.loadAsync({
-      'open-sans-bold': require('../assets/fonts/OpenSans-Bold.ttf'),
-      'gentium-basic': require('../assets/fonts/GenBasB.ttf'),
+      'open-sans-bold': require('../../assets/fonts/OpenSans-Bold.ttf'),
+      'gentium-basic': require('../../assets/fonts/GenBasB.ttf'),
     });
   }
 
