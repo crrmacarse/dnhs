@@ -54,7 +54,7 @@ const AboutStack = createStackNavigator({
 });
 
 AboutStack.navigationOptions = {
-  tabBarLabel: 'About',
+  tabBarLabel: 'About Us',
   tabBarOptions: {
     activeTintColor: 'grey',
   },

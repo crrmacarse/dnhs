@@ -58,7 +58,7 @@ export default class AboutScreen extends React.Component {
               textAlign: 'center',
               color: '#0275d8',
             }}>
-              DUMANGAS
+              DNHS
             </Text>
           
               <Text style={{
@@ -67,7 +67,7 @@ export default class AboutScreen extends React.Component {
             textAlign: 'center',
             color: 'grey',
           }}>
-            National High School
+            More Information
             </Text>
         </View>
 
@@ -85,10 +85,10 @@ export default class AboutScreen extends React.Component {
           </Text>
           <Text style={styles.historyDescription}>
             On June 22, 1957, Congressman Ricardo Y. Ladrido authored and sponsored Republic Act 1925,
-            converting the Barotac Nuevo High School (BNH’S) into a national school of fisheries known
+            converting the Barotac Nuevo High School (BNHï¿½S) into a national school of fisheries known
             as Central Iloilo National School of Fisheries (CINSOF), with Mr. Amedeo S. Timbol as its
             first principal. In 1961, the late Don Juan Paranpan donated a lot in Tiwi, Barotac Nuevo,
-            Iloilo, and broadened the school’s scope of curricular offerings to include collegiate courses.
+            Iloilo, and broadened the schoolï¿½s scope of curricular offerings to include collegiate courses.
             the passage of R.A. 321, converted the Iloilo National School of Fisheries into the Iloilo Regional
             School of Fisheries..
           </Text>
