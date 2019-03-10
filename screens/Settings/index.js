@@ -101,6 +101,7 @@ class SettingsScreen extends React.Component {
     const {
       newNumber,
       newName,
+      newDescription,
       newTags,
       imageArray
     } = this.state;
@@ -108,27 +109,43 @@ class SettingsScreen extends React.Component {
     this.props.firebase.markers().add({
       'number': newNumber,
       'name': newName,
+      'description': newDescription,
       'coords': {
-        'latitude': 10.82745556689352,
-        'longitude': 122.71214302629232,
+        'latitude': 10.8262703,
+        'longitude': 122.7115049,
       },
-      'tags': newTags.split(",")
+      'tags': newTags.split(","),
     })
       .then((docRef) => {
 
-        Alert.alert(
-          'Succesfully Added ',
-          'Added location succesfully',
-          [
-            {
-              text: 'OK', onPress: () => {
-                this._setModalAddClose();
-                this._loadMarkers();
-              }
-            },
-          ],
-          { cancelable: false }
-        )
+        this._uploadImage(docRef.id, imageArray).then((response) => {
+          this.props.firebase.marker(docRef.id).update({
+            imageUrl: response
+          }).then(() => {
+            Alert.alert(
+              'Succesfully Added ',
+              'Added location succesfully',
+              [
+                {
+                  text: 'OK', onPress: () => {
+                    this._setModalAddClose();
+                    this._loadMarkers();
+                  }
+                },
+              ],
+              { cancelable: false }
+            )
+          })
+        }).catch((error) => {
+          Alert.alert(
+            'Internal Error',
+            error.message,
+            [
+              { text: 'OK' },
+            ],
+            { cancelable: false }
+          )
+        })
       })
       .catch((error) => {
         Alert.alert(
@@ -170,7 +187,7 @@ class SettingsScreen extends React.Component {
   }
 
   _saveMarker = () => {
-    const { selectedMarker } = this.state;
+    const { selectedMarker, imageArray } = this.state;
     const markerId = selectedMarker[0].id;
 
     if (!markerId) { return };
@@ -179,10 +196,14 @@ class SettingsScreen extends React.Component {
       ? selectedMarker[0].data.tags
       : selectedMarker[0].data.tags.split(",");
 
+    this._uploadImage(markerId, imageArray).then((response) => {
       this.props.firebase.marker(markerId).update({
         number: selectedMarker[0].data.number,
         name: selectedMarker[0].data.name,
+        description: selectedMarker[0].data.description,
         tags: tagsArray,
+        imageUrl: response,
+        status: selectedMarker[0].data.status
       }).then(() => {
         Alert.alert(
           'Success',
@@ -197,7 +218,8 @@ class SettingsScreen extends React.Component {
           ],
           { cancelable: false }
         )
-      }).catch((error) => {
+      })
+    }).catch((error) => {
       Alert.alert(
         'Internal Error',
         error.message,
@@ -287,6 +309,50 @@ class SettingsScreen extends React.Component {
     }
   }
 
+  _submitImageUpload = async (id, uri) => {
+    let filename = uri.split('/').pop();
+
+    /* 
+      a fetch issue
+
+      https://github.com/expo/expo/issues/2402 
+x
+    */
+
+    const blob = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function () {
+        resolve(xhr.response); // when BlobModule finishes reading, resolve with the blob
+      };
+      xhr.onerror = function () {
+        reject(new TypeError('Network request failed')); // error occurred, rejecting
+      };
+      xhr.responseType = 'blob'; // use BlobModule's UriHandler
+      xhr.open('GET', uri, true); // fetch the blob from uri in async mode
+      xhr.send(null); // no initial data
+    });
+
+    const ref = this.props.firebase
+      .imgStorage()
+      .child(`/images/${id}/${filename}`);
+    const snapshot = await ref.put(blob);
+    const remoteUri = await snapshot.ref.getDownloadURL();
+
+    blob.close();
+
+    return remoteUri;
+  }
+
+  _uploadImage = async (id, uriArray) => {
+
+    const remoteUri = await Promise.all(uriArray.map(async (uri) => {
+      return await this._submitImageUpload(id, uri);
+      // return remoteUri
+    }));
+
+    return remoteUri;
+  }
+
   componentDidMount() {
     this._loadMarkers();
   }
@@ -296,10 +362,12 @@ class SettingsScreen extends React.Component {
       markers,
       newNumber,
       newName,
+      newDescription,
       newTags,
       selectedMarker,
       modalEditClose,
       modalAddVisible,
+      imageArray,
       loading,
       searchVal,
       accessVal,
@@ -309,6 +377,7 @@ class SettingsScreen extends React.Component {
     const isInvalid =
       newNumber === '' ||
       newName === '' ||
+      newDescription === '' ||
       newTags === '';
 
     const { navigate } = this.props.navigation;
@@ -328,7 +397,7 @@ class SettingsScreen extends React.Component {
               this._storeExample();
             }}
           >
-            DNHS Password
+            ISCOF - Dumangas Password
           </Text>
           <TextInput
             onChangeText={(text) => this.setState({ accessVal: text })}
@@ -340,8 +409,8 @@ class SettingsScreen extends React.Component {
           />
           <Button
             onPress={this._handleAccess}
-            title="Enter"
-            color="#0275d8"
+            title="Submit"
+            color="orange"
             accessibilityLabel="Submit"
           />
 
@@ -519,6 +588,55 @@ class SettingsScreen extends React.Component {
                 />
               </View>
 
+              <View style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                marginTop: 10,
+                alignItems: 'center',
+                flexWrap: 'wrap'
+              }}>
+                <Text
+                  style={{
+                    color: "#666",
+                    fontSize: 20,
+                    marginRight: 5,
+                  }}>
+                  Description:
+                 </Text>
+                <View style={{
+                  borderColor: 'grey',
+                  borderWidth: 1,
+                  width: "50%",
+                  flexGrow: 1
+                }}
+                >
+                  <BigTextInput
+                    multiline={true}
+                    numberOfLines={4}
+                    onChangeText={(text) => this.setState({ newDescription: text })}
+                    value={newDescription}
+                  />
+                </View>
+              </View>
+
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10, alignItems: 'center' }}>
+                <Text
+                  style={{
+                    color: "#666",
+                    fontSize: 20,
+                    marginRight: 5,
+                  }}>
+                  Image:
+                 </Text>
+                <TouchableOpacity
+                  onPress={this._handleChooseAnImage}
+                >
+                  <Text>
+                    Choose an Image ({imageArray.length})
+                   </Text>
+                </TouchableOpacity>
+              </View>
+
               <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10, alignItems: 'center' }}>
                 <Text
                   style={{
@@ -684,6 +802,58 @@ class SettingsScreen extends React.Component {
                       fontSize: 20,
                       marginRight: 5,
                     }}>
+                    Description:
+                 </Text>
+                  <View style={{
+                    borderColor: 'grey',
+                    borderWidth: 1,
+                    width: "50%",
+                    flexGrow: 1
+                  }}
+                  >
+                    <BigTextInput
+                      multiline={true}
+                      numberOfLines={4}
+                      value={marker.data.description}
+                      onChangeText={(text) => {
+                        let markerJson = JSON.parse(JSON.stringify(this.state.selectedMarker));
+
+                        markerJson[0].data.description = text;
+
+                        this.setState({
+                          selectedMarker: markerJson
+                        })
+                      }}
+                      value={marker.data.description}
+                    />
+                  </View>
+                </View>
+
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10, alignItems: 'center' }}>
+                  <Text
+                    style={{
+                      color: "#666",
+                      fontSize: 20,
+                      marginRight: 5,
+                    }}>
+                    Image:
+                 </Text>
+                  <TouchableOpacity
+                    onPress={this._handleChooseAnImage}
+                  >
+                    <Text>
+                      Choose an Image ({marker.data.imageUrl ? marker.data.imageUrl.length + imageArray.length : imageArray.length})
+                   </Text>
+                  </TouchableOpacity>
+                </View>
+
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10, alignItems: 'center' }}>
+                  <Text
+                    style={{
+                      color: "#666",
+                      fontSize: 20,
+                      marginRight: 5,
+                    }}>
                     Tags:
                  </Text>
                   <TextInput
@@ -773,6 +943,7 @@ class SettingsScreen extends React.Component {
                       accessibilityLabel="Close"
                     />
                   </ View>
+
                 </View>
               </View>
             </View>
@@ -836,3 +1007,4 @@ withFirebaseSettings.navigationOptions = ({ navigation }) => ({
 });
 
 export default withFirebaseSettings;
+

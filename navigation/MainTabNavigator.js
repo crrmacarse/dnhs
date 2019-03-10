@@ -20,7 +20,7 @@ const RoomStack = createStackNavigator({
 });
 
 RoomStack.navigationOptions = {
-  tabBarLabel: 'Room Navigator',
+  tabBarLabel: 'Map Locator',
   tabBarOptions: {
     activeTintColor: '#064bcb',
   },

@@ -10,7 +10,7 @@ import RoomSearch from './search';
 
 export default class RoomScreen extends React.Component {
   static navigationOptions = {
-    title: 'DNHS Room Finder',
+    title: 'DNHS Map Locator',
     headerStyle: {
       borderBottomColor: 'rgba(8,158,232,.3)',
       borderBottomWidth: 2,

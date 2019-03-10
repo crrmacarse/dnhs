@@ -26,7 +26,9 @@ class LocationScreen extends React.Component {
   }
 
   /*
+
   pass to setImageModalVisible the image then display in modal the image via state
+
   */
 
   state = {
@@ -40,7 +42,7 @@ class LocationScreen extends React.Component {
     layer: 'satellite',
     tags: [],
     moreInfo: [],
-    selectedImgUrl: 'https://scontent.fceb2-2.fna.fbcdn.net/v/t1.0-9/40798_126026807443042_1647030_n.jpg?_nc_cat=110&_nc_ht=scontent.fceb2-2.fna&oh=b2876e87d7ddc9e7819ac40973584929&oe=5CFDDA5A',
+    selectedImgUrl: 'https://scontent.fmnl9-1.fna.fbcdn.net/v/t1.0-1/c0.0.200.200a/11148583_700748856722198_4462099662081086326_n.jpg?_nc_cat=110&_nc_ht=scontent.fmnl9-1.fna&oh=262c873f30b04afd3b4c99fb1f23d7ea&oe=5D1C99B6',
     modalVisible: false,
     modaIlmage: null,
     modalImageVisible: false,
@@ -205,6 +207,33 @@ class LocationScreen extends React.Component {
                   </View>
                 </View>
 
+
+                <View style={{ alignItems: 'center', flexDirection: 'row', marginBottom: 5 }}>
+                  {imageUrl && imageUrl.map((img, index) =>
+                    <TouchableWithoutFeedback onPress={() => {
+                      this.setState({selectedImgUrl: img})
+                      this.setImageModalVisible(true)
+                    }
+                    } key={index}>
+                      <Image
+                        style={{ width: 65, height: 65 }}
+                        source={{uri: img}}
+
+                      />
+                    </TouchableWithoutFeedback>
+                  )}
+                </View>
+
+                <View style={{
+                  alignItems: 'center',
+                  padding: 3,
+                }}>
+                  <Text style={{
+                    textAlign: 'center',
+                    fontStyle: 'italic'
+                  }}>{description}</Text>
+                </View>
+
                 <View style={{ flexDirection: 'row', marginTop: 15 }}>
                   {tags.map((tag, index) =>
                     <Text key={index}
@@ -233,6 +262,48 @@ class LocationScreen extends React.Component {
               </View>
             </View>
           </TouchableWithoutFeedback>
+        </Modal>
+
+        <Modal
+          animationType="slide"
+          transparent={false}
+          presentationStyle="fullScreen"
+          onRequestClose={() => {
+            this.setImageModalVisible(false)
+          }}
+          visible={this.state.modalImageVisible}
+        >
+          <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+            <View style={{ backgroundColor: '#fff', justifyContent: "center", alignItems: 'center' }}>
+
+              <View style={{ flex: 2, alignItems: 'center', flexDirection: 'row' }}>
+                <ImageBackground
+                  style={{ width: '100%', height: '100%' }}
+                  source={{uri: selectedImgUrl}}
+                />
+              </View>
+
+              <View style={{
+                flex: 0,
+                position: 'absolute',
+                top: 5,
+                right: 5,
+                zIndex: 1030,
+              }}>
+                <TouchableOpacity
+                  onPress={() => {
+                    this.setImageModalVisible(!this.state.modalImageVisible);
+                  }}>
+                  <Icon.Ionicons
+                    name={Platform.OS === 'ios' ? 'ios-close-circle' : 'md-close-circle'}
+                    size={40}
+                    style={{ marginRight: 8 }}
+                    color="white"
+                  />
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
         </Modal>
 
         <View style={{
@@ -270,3 +341,5 @@ withFirebaseLocation.navigationOptions = ({ navigation }) => ({
 });
 
 export default withFirebaseLocation;
+
+

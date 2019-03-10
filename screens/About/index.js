@@ -73,9 +73,8 @@ export default class AboutScreen extends React.Component {
 
         <View style={styles.contentContainer}>
           <Text style={styles.description}>
-            The Iloilo State College of Fisheries
-            is a public college in the Philippines. It is mandated to provide higher technological, professional and vocational instruction and training in fisheries, science, as well as short-term
-            technical or vocational courses in fisheries.
+              Dumangas National High School is a Local Government High School located in Dumangas, Iloilo. It was conceived to further support 
+              the locals of Dumangas who seek quality educational attainment.
           </Text>
         </View>
 
@@ -84,13 +83,13 @@ export default class AboutScreen extends React.Component {
             HISTORY
           </Text>
           <Text style={styles.historyDescription}>
-            On June 22, 1957, Congressman Ricardo Y. Ladrido authored and sponsored Republic Act 1925,
-            converting the Barotac Nuevo High School (BNH�S) into a national school of fisheries known
-            as Central Iloilo National School of Fisheries (CINSOF), with Mr. Amedeo S. Timbol as its
-            first principal. In 1961, the late Don Juan Paranpan donated a lot in Tiwi, Barotac Nuevo,
-            Iloilo, and broadened the school�s scope of curricular offerings to include collegiate courses.
-            the passage of R.A. 321, converted the Iloilo National School of Fisheries into the Iloilo Regional
-            School of Fisheries..
+            Of all the newly legislated high school created in the Division of Iloilo recently, Dumangas, National High School has a very interesting beginning. 
+            It existed already before it was created. It is a result of series of consequences.
+          </Text>
+          <Text style={styles.historyDescription}>
+            It must be recalled that last 1996, the Commission on Higher Education Issued CHED order no. 4 s. 1996 providing for the phase down of secondary 
+            program to a maximum of 500 students for laboratory school of SUC offering a teacher education program. 
+            Dumangas Polytechnic College is one intuition affected by the order.
           </Text>
 
           <TouchableOpacity
@@ -114,11 +113,10 @@ export default class AboutScreen extends React.Component {
               MISSION
             </Text>
             <Text style={styles.historyDescription}>
-              To provide advanced education, higher technological, professional instruction and training in fisheries
-              technology, arts and sciences, education, industrial technology, engineering, aquaculture, seaweed farming
-              and other related fields of study and as may be relevant to national development. It shall also undertake
-              research, extension services and production activities in support of the development of the Province of
-              Iloilo and provide progressive leadership in its areas of specialization.
+              In the realization of the aims of education as manadates by the constitution, DNHS shall:
+              Adhere to the ideals of the teaching profession; Be equipped in knowledge and skills capable
+              of attaining the objectives of quality education; Capable of managing changes and demands of 
+              a competitive society; God loving with strong sense of moral and spiritual values
             </Text>
           </View>
 
@@ -127,7 +125,9 @@ export default class AboutScreen extends React.Component {
               Vision
             </Text>
             <Text style={styles.historyDescription}>
-              A <Text style={{ color: 'green', fontWeight: 'bold' }}>premier</Text> academic institution in Southeast Asia.
+              Dumangas National High School envision to produce graduates who are: Scientifically and 
+              technologically literate; Economically productive citizens; Creative and innovative; and
+              Above all; graduates who know moral right for wrong.
             </Text>
           </View>
 
