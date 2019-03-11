@@ -202,8 +202,7 @@ class SettingsScreen extends React.Component {
         name: selectedMarker[0].data.name,
         description: selectedMarker[0].data.description,
         tags: tagsArray,
-        imageUrl: response,
-        status: selectedMarker[0].data.status
+        imageUrl: response
       }).then(() => {
         Alert.alert(
           'Success',
@@ -397,7 +396,7 @@ x
               this._storeExample();
             }}
           >
-            ISCOF - Dumangas Password
+            DNHS Password
           </Text>
           <TextInput
             onChangeText={(text) => this.setState({ accessVal: text })}
@@ -410,7 +409,7 @@ x
           <Button
             onPress={this._handleAccess}
             title="Submit"
-            color="orange"
+            color="#089EE8"
             accessibilityLabel="Submit"
           />
 
